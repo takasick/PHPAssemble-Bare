@@ -21,13 +21,13 @@ composer install
 
 ```bash
 # Direct execution
-php bin/assemble.php --config=bundle.json
+php bin/assemble.php --config=assemble.json
 
 # Show help
 php bin/assemble.php --help
 ```
 
-### Configuration File (bundle.json)
+### Configuration File (assemble.json)
 
 ```json
 {

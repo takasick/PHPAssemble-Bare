@@ -18,7 +18,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "build": "php bin/assemble --config=bundle.json"
+        "build": "php bin/assemble --config=assemble.json"
     },
     "bin": [
         "bin/assemble"

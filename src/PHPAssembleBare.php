@@ -55,10 +55,10 @@ class PHPAssembleBare {
     {
         echo "Usage: " . basename(__FILE__) . " [options]\n";
         echo "\nOptions:\n";
-        echo "  --config=PATH            JSON config file path (default: bundle.json)\n";
+        echo "  --config=PATH            JSON config file path (default: assemble.json)\n";
         echo "  --working-dir=PATH       Change working directory before building\n";
         echo "  --help                   Show this help message\n";
-        echo "\nBundle Configuration (bundle.json):\n";
+        echo "\nBundle Configuration (assemble.json):\n";
         echo "{\n";
         echo "  \"output\": \"string\",           // Output file path (default: " . BundleConfig::getDefaultOutputFilename() . ")\n";
         echo "  \"entrypoint\": \"string\",       // Entry point function/method (default: " . BundleConfig::getDefaultEntrypoint() . ")\n";
@@ -93,7 +93,7 @@ class PHPAssembleBare {
     private static function parseArguments(array $argv): array
     {
         $options = [
-            'config' => 'bundle.json',
+            'config' => 'assemble.json',
             'working-dir' => null,
             'help' => false,
         ];
