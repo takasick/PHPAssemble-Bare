@@ -1,0 +1,25 @@
+{
+    "name": "taksick/php-assemble-bare",
+    "description": "bundling multiple PHP files into a single file.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KIKUCHI Takashi"
+        }
+    ],
+    "require": {
+        "nikic/php-parser": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPAssembleBare\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "build": "php bin/assemble --config=bundle.json"
+    },
+    "bin": [
+        "bin/assemble"
+    ]
+}
