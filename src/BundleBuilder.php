@@ -105,12 +105,14 @@ class BundleBuilder
             }
         }
         
-        // Add execution code at the end
-        $executionCode = $this->getExecutionCode($config);
-        if (file_put_contents($tempFile, $executionCode, FILE_APPEND | LOCK_EX) === false) {
-            echo "Error: Failed to append execution code to temporary file: {$tempFile}\n";
-            $cleanupTemp();
-            return false;
+        // Add execution code at the end if entrypoint is specified
+        if ($config->entrypoint !== '') {
+            $executionCode = $this->getExecutionCode($config);
+            if (file_put_contents($tempFile, $executionCode, FILE_APPEND | LOCK_EX) === false) {
+                echo "Error: Failed to append execution code to temporary file: {$tempFile}\n";
+                $cleanupTemp();
+                return false;
+            }
         }
         
         // Atomically move temporary file to final output file

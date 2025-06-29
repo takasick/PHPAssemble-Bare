@@ -54,7 +54,7 @@ php bin/assemble.php --help
 | オプション | 型 | デフォルト | 説明 |
 |-----------|-----|-----------|------|
 | `output` | string | `bundle.php` | 出力ファイルのパス |
-| `entrypoint` | string | `main` | バンドルファイルの実行時に呼び出す関数/メソッド |
+| `entrypoint` | string | `""` (空文字) | バンドルファイルの実行時に呼び出す関数/メソッド（オプション） |
 | `entrypoint_args` | string | `$argc, $argv` | エントリーポイントに渡す引数 |
 | `bundle_title` | string | `Bundle Version` | バンドルのタイトル（ヘッダーコメント用） |
 | `keep_namespaces` | boolean | `true` | 名前空間宣言を保持するか |

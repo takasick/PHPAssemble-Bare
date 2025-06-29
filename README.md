@@ -54,7 +54,7 @@ php bin/assemble.php --help
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `output` | string | `bundle.php` | Output file path |
-| `entrypoint` | string | `main` | Function/method to call when executing the bundle |
+| `entrypoint` | string | `""` (empty) | Function/method to call when executing the bundle (optional) |
 | `entrypoint_args` | string | `$argc, $argv` | Arguments to pass to the entry point |
 | `bundle_title` | string | `Bundle Version` | Bundle title (for header comment) |
 | `keep_namespaces` | boolean | `true` | Whether to preserve namespace declarations |

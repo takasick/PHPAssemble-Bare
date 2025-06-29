@@ -8,7 +8,7 @@ class BundleConfig
 {
     // Default values
     private const DEFAULT_OUTPUT_FILENAME = 'bundle.php';
-    private const DEFAULT_ENTRYPOINT = 'main';
+    private const DEFAULT_ENTRYPOINT = '';
     private const DEFAULT_ENTRYPOINT_ARGS = '$argc, $argv';
     private const DEFAULT_BUNDLE_TITLE = 'Bundle Version';
     private const DEFAULT_SOURCE_FILES = [];
