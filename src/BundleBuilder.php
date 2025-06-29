@@ -29,7 +29,7 @@ class BundleBuilder
 {
     public function build(BundleConfig $config): bool
     {
-        $sourceDir = dirname(__DIR__);
+        $sourceDir = getcwd();
         $outputFile = $config->output;
         
         // Create temporary file for safe atomic write
