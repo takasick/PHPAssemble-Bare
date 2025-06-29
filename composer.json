@@ -7,6 +7,7 @@
             "name": "KIKUCHI Takashi"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "nikic/php-parser": "^5.0"
     },
