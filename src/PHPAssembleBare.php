@@ -61,7 +61,7 @@ class PHPAssembleBare {
         echo "\nBundle Configuration (assemble.json):\n";
         echo "{\n";
         echo "  \"output\": \"string\",           // Output file path (default: " . BundleConfig::getDefaultOutputFilename() . ")\n";
-        echo "  \"entrypoint\": \"string\",       // Entry point function/method (default: " . BundleConfig::getDefaultEntrypoint() . ")\n";
+        echo "  \"entrypoint\": \"string\",       // Entry point function/method (optional, default: empty)\n";
         echo "  \"entrypoint_args\": \"string\",  // Entry point arguments (default: " . BundleConfig::getDefaultEntrypointArgs() . ")\n";
         echo "  \"bundle_title\": \"string\",     // Bundle title for header comment\n";
         echo "  \"keep_namespaces\": boolean,   // Keep namespace declarations (default: true)\n";
