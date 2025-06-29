@@ -18,7 +18,8 @@
     },
     "scripts": {
         "test": "phpunit",
-        "build": "php bin/assemble --config=assemble.json"
+        "build": "php bin/assemble --config=assemble.json",
+        "build-phar": "php -d phar.readonly=0 bin/assemble --config=assemble-phar.json"
     },
     "bin": [
         "bin/assemble"

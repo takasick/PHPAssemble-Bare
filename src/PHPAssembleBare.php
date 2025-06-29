@@ -39,7 +39,13 @@ class PHPAssembleBare {
         }
         
         $config = self::loadConfig($options['config']);
-        $builder = new BundleBuilder();
+        
+        // Select builder based on output format
+        if ($config->isPharFormat()) {
+            $builder = new PharBuilder();
+        } else {
+            $builder = new BundleBuilder();
+        }
         
         if (!$builder->build($config)) {
             return 1;
@@ -60,13 +66,14 @@ class PHPAssembleBare {
         echo "  --help                   Show this help message\n";
         echo "\nBundle Configuration (assemble.json):\n";
         echo "{\n";
-        echo "  \"output\": \"string\",           // Output file path (default: " . BundleConfig::getDefaultOutputFilename() . ")\n";
+        echo "  \"output\": \"string\",           // Output file path (default: " . AssembleConfig::getDefaultOutputFilename() . ")\n";
         echo "  \"entrypoint\": \"string\",       // Entry point function/method (optional, default: empty)\n";
-        echo "  \"entrypoint_args\": \"string\",  // Entry point arguments (default: " . BundleConfig::getDefaultEntrypointArgs() . ")\n";
+        echo "  \"entrypoint_args\": \"string\",  // Entry point arguments (default: " . AssembleConfig::getDefaultEntrypointArgs() . ")\n";
         echo "  \"bundle_title\": \"string\",     // Bundle title for header comment\n";
         echo "  \"keep_namespaces\": boolean,   // Keep namespace declarations (default: true)\n";
         echo "  \"shebang_line\": \"string\",     // Shebang line for executable files (empty to disable)\n";
         echo "  \"strict_types\": boolean,      // Include declare(strict_types=1) (default: true)\n";
+        echo "  \"output_format\": \"string\",    // Output format: bundle, phar, phar-gz, phar-bz2 (default: phar)\n";
         echo "  \"source_files\": [            // Array of source files to bundle\n";
         echo "    \"path/to/file.php\",        //   Exact file path\n";
         echo "    \"src/*.php\",               //   Wildcard pattern\n";
@@ -120,9 +127,9 @@ class PHPAssembleBare {
      * Load configuration from JSON file
      *
      * @param string $configPath Path to configuration file
-     * @return BundleConfig Configuration object
+     * @return AssembleConfig Configuration object
      */
-    private static function loadConfig(string $configPath): BundleConfig
+    private static function loadConfig(string $configPath): AssembleConfig
     {
         if (!file_exists($configPath)) {
             echo "Config file not found: {$configPath}\n";
@@ -137,6 +144,6 @@ class PHPAssembleBare {
             exit(1);
         }
         
-        return new BundleConfig($data);
+        return new AssembleConfig($data);
     }
 }

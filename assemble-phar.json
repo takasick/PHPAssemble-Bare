@@ -1,0 +1,17 @@
+{
+  "output_format": "phar-gz",
+  "output": "bin/bundle.phar",
+  "entrypoint": "\\PHPAssembleBare\\PHPAssembleBare::main",
+  "entrypoint_args": "$argc, $argv",
+  "bundle_title": "PHPAssemble-Bare Phar Bundle",
+  "keep_namespaces": true,
+  "shebang_line": "#!/usr/bin/env php",
+  "strict_types": true,
+  "source_files": [
+    "src/*.php"
+  ],
+  "source_files_exclude": [
+    "vendor/nikic/php-parser/lib/PhpParser/Node/Stmt/StaticVar.php",
+    "vendor/nikic/php-parser/lib/PhpParser/Node/Expr/ArrayItem.php"
+  ]
+}

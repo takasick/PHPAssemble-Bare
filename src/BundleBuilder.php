@@ -27,7 +27,7 @@ use PhpParser\NodeVisitorAbstract;
 
 class BundleBuilder
 {
-    public function build(BundleConfig $config): bool
+    public function build(AssembleConfig $config): bool
     {
         $sourceDir = getcwd();
         $outputFile = $config->output;
@@ -49,7 +49,7 @@ class BundleBuilder
         
         // Generate metadata
         $buildTime = date('Y-m-d H:i:s T');
-        $version = $this->getBundleVersion();
+        $version = $config->getBundleVersion();
         $relativePaths = $config->getRelativePaths($sourceDir);
         
         // Initialize output file with header
@@ -135,33 +135,8 @@ class BundleBuilder
         return true;
     }
     
-    private function getBundleVersion(): string
-    {
-        // Try to get version from git
-        if (is_dir('.git')) {
-            $gitHash = exec('git rev-parse --short HEAD 2>/dev/null');
-            if ($gitHash) {
-                $gitTag = exec('git describe --tags --exact-match HEAD 2>/dev/null');
-                if ($gitTag) {
-                    return $gitTag;
-                }
-                return "git-{$gitHash}";
-            }
-        }
-        
-        // Try to get version from composer.json
-        if (file_exists('composer.json')) {
-            $composerData = json_decode(file_get_contents('composer.json'), true);
-            if (isset($composerData['version'])) {
-                return $composerData['version'];
-            }
-        }
-        
-        // Fallback to build timestamp
-        return 'build-' . date('Ymd-His');
-    }
     
-    private function extractClassContent(string $filePath, BundleConfig $config): string
+    private function extractClassContent(string $filePath, AssembleConfig $config): string
     {
         $content = file_get_contents($filePath);
         
@@ -174,7 +149,7 @@ class BundleBuilder
         return $content;
     }
     
-    private function stripPhpTags(string $content, BundleConfig $config, string $filePath): string
+    private function stripPhpTags(string $content, AssembleConfig $config, string $filePath): string
     {
         $parserFactory = new ParserFactory();
         $parser = $parserFactory->createForNewestSupportedVersion();
@@ -377,7 +352,7 @@ class BundleBuilder
         return 'BNDL_' . $hexHash;
     }
     
-    private function getExecutionCode(BundleConfig $config): string
+    private function getExecutionCode(AssembleConfig $config): string
     {
         $code = "// " . str_repeat('=', 77) . "\n";
         $code .= "// Script Execution\n";

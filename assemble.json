@@ -1,4 +1,5 @@
 {
+  "output_format": "bundle",
   "output": "bin/bundle",
   "entrypoint": "\\PHPAssembleBare\\PHPAssembleBare::main",
   "entrypoint_args": "$argc, $argv",

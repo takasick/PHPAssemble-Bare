@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PHPAssembleBare;
 
-class BundleConfig
+class AssembleConfig
 {
     // Default values
     private const DEFAULT_OUTPUT_FILENAME = 'bundle.php';
@@ -16,6 +16,7 @@ class BundleConfig
     private const DEFAULT_KEEP_NAMESPACES = true;
     private const DEFAULT_SHEBANG_LINE = '';
     private const DEFAULT_STRICT_TYPES = true;
+    private const DEFAULT_OUTPUT_FORMAT = 'phar';
     
     public string $output;
     public string $entrypoint;
@@ -26,6 +27,7 @@ class BundleConfig
     public bool $keepNamespaces;
     public string $shebangLine;
     public bool $strictTypes;
+    public string $outputFormat;
 
     public function __construct(array $data)
     {
@@ -38,6 +40,7 @@ class BundleConfig
         $this->keepNamespaces = $data['keep_namespaces'] ?? self::DEFAULT_KEEP_NAMESPACES;
         $this->shebangLine = $data['shebang_line'] ?? self::DEFAULT_SHEBANG_LINE;
         $this->strictTypes = $data['strict_types'] ?? self::DEFAULT_STRICT_TYPES;
+        $this->outputFormat = $data['output_format'] ?? self::DEFAULT_OUTPUT_FORMAT;
         
         $this->sourceFiles = self::expandWildcards($this->sourceFiles);
         $this->sourceFilesExclude = self::expandWildcards($this->sourceFilesExclude);
@@ -119,5 +122,58 @@ class BundleConfig
         return array_filter($sourceFiles, function($file) use ($excludeSet) {
             return !isset($excludeSet[$file]);
         });
+    }
+    
+    /**
+     * Get bundle version from git or composer.json
+     */
+    public function getBundleVersion(): string
+    {
+        // Try to get version from git
+        if (is_dir('.git')) {
+            $gitHash = exec('git rev-parse --short HEAD 2>/dev/null');
+            if ($gitHash) {
+                $gitTag = exec('git describe --tags --exact-match HEAD 2>/dev/null');
+                if ($gitTag) {
+                    return $gitTag;
+                }
+                return "git-{$gitHash}";
+            }
+        }
+        
+        // Try to get version from composer.json
+        if (file_exists('composer.json')) {
+            $composerData = json_decode(file_get_contents('composer.json'), true);
+            if (isset($composerData['version'])) {
+                return $composerData['version'];
+            }
+        }
+        
+        // Fallback to build timestamp
+        return 'build-' . date('Ymd-His');
+    }
+    
+    /**
+     * Get compression type from output format
+     */
+    public function getCompressionType(): string
+    {
+        switch ($this->outputFormat) {
+            case 'phar-gz':
+                return 'gzip';
+            case 'phar-bz2':
+                return 'bzip2';
+            case 'phar':
+            default:
+                return 'none';
+        }
+    }
+    
+    /**
+     * Check if this is a Phar format
+     */
+    public function isPharFormat(): bool
+    {
+        return in_array($this->outputFormat, ['phar', 'phar-gz', 'phar-bz2']);
     }
 }
