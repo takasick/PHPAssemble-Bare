@@ -11,7 +11,19 @@ use PHPAssembleBare\PHPAssembleBare;
  * This is the main entry point
  */
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+// Try different autoload.php locations based on installation method
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php', // Project installation
+    __DIR__ . '/../../../autoload.php',  // Composer package installation
+    __DIR__ . '/../autoload.php',        // Composer bin installation
+];
+
+foreach ($autoloadPaths as $autoloadPath) {
+    if (file_exists($autoloadPath)) {
+        require $autoloadPath;
+        break;
+    }
+}
 
 if (php_sapi_name() === 'cli') {
     exit(PHPAssembleBare::main($argc, $argv));
