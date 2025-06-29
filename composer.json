@@ -1,5 +1,5 @@
 {
-    "name": "taksick/php-assemble-bare",
+    "name": "takasick/php-assemble-bare",
     "description": "bundling multiple PHP files into a single file.",
     "license": "MIT",
     "authors": [
